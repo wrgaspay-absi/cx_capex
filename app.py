@@ -41,6 +41,8 @@ logger = logging.getLogger("signature_detection_api")
 # ---------------------------
 app = FastAPI(title="Signature Detection API", version="1.0")
 
+# Enable CORS so the API can be accessed from browsers or other domains
+# For production, replace ["*"] with ["https://your-frontend-domain.com"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # restrict in production
@@ -201,6 +203,7 @@ async def detect_signatures(file: UploadFile = File(...)) -> Dict[str, Any]:
             # Optionally, you could run pytesseract here on cropped_region to extract text.
             # For now we only return coordinates + confidence to keep endpoint fast and predictable.
 
+            # Append detection details
             detection_data.append({
                 "signature_box": [int(x_min), int(y_min), int(x_max), int(y_max)],
                 "confidence": float(getattr(box, "conf", 0.0)),
