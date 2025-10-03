@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     tesseract-ocr-eng \
     libgl1 \
     libglib2.0-0 \
+    poppler-utils \
     && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory in the container
